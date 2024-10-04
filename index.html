@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiny Course</title>
+</head>
+<link rel="stylesheet" href="index.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+        },
+        "HTML-CSS": { scale: 90 },
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js" integrity="sha512-cOH8ndwGgPo+K7pTvMrqYbmI8u8k6Sho3js0gOqVWTmQMlLIi6TbqGWRTpf1ga8ci9H3iPsvDLr4X7xwhC/+DQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js" integrity="sha512-AMl4wfwAmDM1lsQvVBBRHYENn1FR8cfOTpt8QVbb/P55mYOdahHD4LmHM1W55pNe3j/3od8ELzPf/8eNkkjISQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Observer.min.js" integrity="sha512-7xTD1meeGGoAzwZKA0Z8YelV3qAvRltuwACWXpnxtneF7VAMztOTAi3t4laVSaE4Znq4LMPeGUIYWEvKEk5r3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js" integrity="sha512-S6SXKUZ11xkCoD/UuhdXG4B4iiCXng+xW2KCx0lgfQqmdqtjqGgm4WChdYIhO1F/CmH21vnkSUvPEgXNgDwkjg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="index.js" defer></script>
+<body>
+
+    <div class="nav-bar">
+        <div class="logo"><h1>A/G</h1></div>
+        <div class="sections">
+            <div class="sections-sub">
+                <a href="#sec1">Introduction to Shiny</a>
+                <div class="subheadings">
+                    <a href="#sub1_1">Layouts</a>
+                    <a href="#sub1_4">Pre-Built Layouts</a>
+                    <a href="#sub1_2">User Interface (Inputs)</a>
+                    <a href="#sub1_3">User Interface (Outputs)</a>
+                    <a href="#sub1_5">Reactivity</a>
+                    <a href="#sub1_6">User Feedback</a>
+                    <a href="#sub1_7">Create our first App</a>
+                    <a href="#sub1_8">GGPlotly</a>
+                </div>
+            </div>
+            <div class="sections-sub">
+                <a href="#sec2">Plots</a>
+                <div class="subheadings">
+                    <a href="#sub2_1">Scatterplot</a>
+                    <a href="#sub2_2">Line Charts</a>
+                    <a href="#sub2_3">Bar Plot</a>
+                    <a href="#sub2_4">Box/Violin Plots</a>
+                    <a href="#sub2_5">2d Frequencies</a>
+                    <a href="#sub2_6">Heatmaps/Contours</a>
+                    <a href="#sub2_7">3D Plots</a>
+                    <a href="#sub2_8">Maps</a>
+                </div>
+            </div>
+            <div class="sections-sub">
+                <a href="#sec3">Linking/Publishing Plots</a>
+                <div class="subheadings">
+                    <a href="#sub3_1">Saving as html</a>
+                    <a href="#sub3_2">Arranging Interactive Plots</a>
+                    <a href="#sub3_3">Animating Views</a>
+                    <a href="#sub3_4">Linking Views</a>
+                    <a href="#sub3_5">Linking Sub-Plots</a>
+                    <a href="#sub3_6">Dashboards</a>
+                </div>
+            </div>
+            <div class="sections-sub">
+                <a href="#sec4">Contact/Resources</a>
+                <div class="subheadings">
+                    <a href="#sub4_1">Who Am I?</a>
+                    <a href="#sub4_2">Resources/References</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Introduction -->
+    <div class="intro">
+        <div class="headers">
+            <h1 class="name">Arjun Ghumman</h1>
+            <h1 class="title">Learn Shiny from Scratch</h1>
+        </div>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="section sec1">
+        <h2 id="sec1">Setting up Shiny</h2>
+        <p>Shiny is an R package that allows users to create interactive web applications directly from R. It is a powerful tool for data visualization, exploration, and communication, enabling users to build interactive dashboards, web applications, and reports without needing to learn web development languages like HTML, CSS, or JavaScript. Shiny leverages the R programming language, making it easy for R users to create interactive web applications using their existing knowledge and skills.</p>
+        <ol>
+          <li><strong>Install R and RStudio:</strong>
+            <ul style="margin-left: 20px;">
+              <li>Download and install the latest version of R from <a href="https://cran.r-project.org/">CRAN</a>.</li>
+              <li>Download and install RStudio from <a href="https://rstudio.com/products/rstudio/download/">RStudio's website</a> to make managing your R projects easier.</li>
+            </ul>
+          </li>
+          <li><strong>Install the Shiny package in R:</strong>
+            <ul style="margin-left: 20px;">
+              <li>Open RStudio and run the command <pre>install.packages("shiny")</pre> in the console to install Shiny.</li>
+            </ul>
+          </li>
+          <li><strong>Create a new R script or R Markdown file:</strong>
+            <ul style="margin-left: 20px;">
+              <li>In RStudio, go to File &gt; New File &gt; R Script for a basic script or R Markdown for a more complex application with narrative text and outputs.</li>
+            </ul>
+          </li>
+          <li><strong>Load the Shiny library:</strong>
+            <ul style="margin-left: 20px;">
+              <li>At the beginning of your script, add <pre>library(shiny)</pre> to load the package.</li>
+            </ul>
+          </li>
+          <li><strong>Define UI (User Interface):</strong>
+            <ul style="margin-left: 20px;">
+              <li>Once you have set up a shiny script and set a directory for your app, it's time to start. We begin by establishing the basics and defining a user-interface. A user interface is what the user interacts with,
+                and can be defined in a multitude of ways.
+              </li>
+              <li>This section is primarily working with defining the html code behind the scenes and giving users the framework to add inputs and a field to show the output.</li>
+            </ul>
+          </li>
+          <li><strong>Define server logic:</strong>
+            <ul style="margin-left: 20px;">
+              <li>Define the server logic that will process user inputs and generate outputs.</li>
+              <li>This section is primarily working with the R code that will be executed when the user interacts with the UI. </li>
+              <li>This function/logic is primarily working with JS (Javascript) to accept user inputs and return some form of output.</li>
+            </ul>
+          </li>
+          <li><strong>Run the app:</strong>
+            <ul style="margin-left: 20px;">
+              <li>Use the following code: <pre>shinyApp(ui = ui, server = server)</pre> at the end of your script to run the app directly from RStudio.</li>
+              <li>Alternatively, you can use the 'Run App' button in RStudio when your script is open.</li>
+            </ul>
+          </li>
+          <li><strong>Deploy the app (optional):</strong>
+            <ul style="margin-left: 20px;">
+              <li>Deploy your app online using services like <a href="https://www.shinyapps.io/">shinyapps.io</a> or your own Shiny Server.</li>
+            </ul>
+          </li>
+        </ol>
+        
+        <h3 id = "sub1_1">Layouts</h3>
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Function</th>
+              <th>Description</th>
+              <th>Example Code</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>basicPage</code></td>
+              <td>Creates a simple page layout without Bootstrap dependencies, suitable for basic web pages.</td>
+              <td><code>basicPage("Content Here")</code></td>
+            </tr>
+            <tr>
+              <td><code>bootstrapPage</code></td>
+              <td>Generates a page that includes Bootstrap, allowing for responsive layouts using Bootstrap's grid system.</td>
+              <td><code>bootstrapPage("Content Here")</code></td>
+            </tr>
+            <tr>
+              <td><code>fillPage</code></td>
+              <td>Creates a page layout that expands to fill the entire window, useful for applications needing to utilize full screen space.</td>
+              <td><code>fillPage("Content Here")</code></td>
+            </tr>
+            <tr>
+              <td><code>fixedPage</code></td>
+              <td>Creates a page with a fixed-width layout, often used for simpler designs that do not require responsiveness.</td>
+              <td><code>fixedPage("Content Here")</code></td>
+            </tr>
+            <tr>
+              <td><code>fluidPage</code></td>
+              <td>Constructs a page with a fluid layout that adjusts to the screen size, using Bootstrap's responsive grid system.</td>
+              <td><code>fluidPage("Content Here")</code></td>
+            </tr>
+            <tr>
+              <td><code>navbarPage</code></td>
+              <td>Creates a page with a top navigation bar to include multiple tabs or pages within the application.</td>
+              <td><code>navbarPage("Title", tabPanel("Tab 1", "Content for tab 1"), tabPanel("Tab 2", "Content for tab 2"))</code></td>
+            </tr>
+            <tr>
+              <td><code>pageWithSidebar</code></td>
+              <td>Generates a page with a main panel and a sidebar, typically used for dashboards and applications requiring user input controls alongside displayed outputs.</td>
+              <td><code>pageWithSidebar(headerPanel("Header"), sidebarPanel("Sidebar Content"), mainPanel("Main Content"))</code></td>
+            </tr>
+            <tr>
+              <td><code>updateNavbarPage</code></td>
+              <td>Updates a navbar page dynamically on the server side, useful for applications that need to change the content or structure of the navigation bar based on user interaction.</td>
+              <td>Typically used in server logic, not directly in UI code.</td>
+            </tr>
+            <tr>
+              <td><code>flowLayout</code></td>
+              <td>Arranges UI elements in a left-to-right flow, wrapping onto multiple lines as needed, providing a responsive layout.</td>
+              <td><code>flowLayout(textInput("text", "Enter Text"), numericInput("num", "Enter Number"))</code></td>
+            </tr>
+            <tr>
+              <td><code>sidebarLayout</code></td>
+              <td>Creates a layout with a sidebar for inputs and a main panel for outputs, commonly used in dashboard-style applications.</td>
+              <td><code>sidebarLayout(sidebarPanel("Inputs"), mainPanel("Outputs"))</code></td>
+            </tr>
+            <tr>
+              <td><code>splitLayout</code></td>
+              <td>Splits the page into two or more sections side by side, useful for comparing outputs or placing inputs next to each other.</td>
+              <td><code>splitLayout(cellWidths = c("50%", "50%"), "Left Panel", "Right Panel")</code></td>
+            </tr>
+            <tr>
+              <td><code>verticalLayout</code></td>
+              <td>Stacks UI elements vertically, ensuring that each element takes up a full width of its container, helpful for mobile-friendly designs.</td>
+              <td><code>verticalLayout("Element 1", "Element 2", "Element 3")</code></td>
+            </tr>
+          </tbody>
+        </table>
+        
+        
+        <h3 id="sub1_4">Pre-Built Layouts (Code)</h3>
+
+        <p>These layouts are designed to simplify the process of building web applications by providing ready-to-use templates that can be customized and extended as needed.</p>
+
+        <div class="toggle-section">
+          <button class = "active">Side-by-Side</button>
+          <button>Stacked</button>
+          <button>Stacked-Reversed</button>
+          <button>Tab-Based</button>
+          <button>Nav-List</button>
+          <button>Dashboard</button>
+          <div id="list-container">
+              <div>
+                <pre style="width: 100%; text-align: left;">
+                  # Side by Side
+                  library(shiny)
+
+                  ui &lt; fluidPage(
+                    titlePanel("Reactive Text"),
+                    # Add CSS
+                    tags$style(HTML("
+                      #greeting {
+                        color: red;
+                        display:grid;
+                        place-items:center;
+                        min-height:25vh;
+                      }
+                      .shiny-output-error-validation:after {
+                        content: 'Error';
+                      }")),
+                    sidebarLayout(
+                      sidebarPanel(
+                        textInput("name", "Enter your name", "John Doe"),
+                        sliderInput("age", "Enter your age", 18, 100, 18),width = 4
+                      ),
+                      mainPanel(
+                        textOutput("greeting"), width = 8
+                      )
+                    )
+                  )
+
+                  server &lt; function(input, output) {
+                    output$greeting &lt; renderText({
+                      paste("Hello", input$name, "you are", input$age, "years old.")
+                    })
+
+                  }
+
+                  shinyApp(ui = ui, server = server)
+                </pre>
+              </div>
+              <div class = "hidden">
+                <pre>
+                ui &lt; fluidPage(
+                  titlePanel("Reactive Text"),
+                  # Add CSS
+                  tags$style(HTML("
+                    #greeting {
+                      color: red;
+                      display:grid;
+                      place-items:center;
+                      min-height:25vh;
+                    }
+                    .shiny-output-error-validation:after {
+                      content: 'Error';
+                    }")),
+                  sidebarLayout(
+                    sidebarPanel(
+                      textInput("name", "Enter your name", "John Doe"),
+                      sliderInput("age", "Enter your age", 18, 100, 18),width = 12
+                    ),
+                    mainPanel(
+                      textOutput("greeting"),width = 12
+                    )
+                  )
+                )
+
+                server &lt; function(input, output) {
+                  output$greeting &lt; renderText({
+                    paste("Hello", input$name, "you are", input$age, "years old.")
+                  })
+
+                }
+
+                shinyApp(ui = ui, server = server)
+                </pre>
+
+              </div>
+              <div class = "hidden">
+                <pre>
+                  ui &lt; fluidPage(
+                  titlePanel("Reactive Text"),
+                  # Add CSS
+                  tags$style(HTML("
+                    #greeting {
+                      color: red;
+                      display:grid;
+                      place-items:center;
+                      min-height:25vh;
+                    }
+                    .shiny-output-error-validation:after {
+                      content: 'Error';
+                    }")),
+                  sidebarLayout(
+                    mainPanel(
+                      textOutput("greeting"),width = 12
+                    ),
+                    sidebarPanel(
+                      textInput("name", "Enter your name", "John Doe"),
+                      sliderInput("age", "Enter your age", 18, 100, 18),width = 12
+                    )
+                  )
+                )
+
+                server &lt; function(input, output) {
+                  output$greeting &lt; renderText({
+                    paste("Hello", input$name, "you are", input$age, "years old.")
+                  })
+
+                }
+
+                shinyApp(ui = ui, server = server)
+
+                </pre>
+              </div>
+              <div class = "hidden">
+                <pre>
+                  ui &lt; fluidPage(
+                        titlePanel('Tab Items'),
+                        tabsetPanel(
+                          tabPanel('Name',
+                                  textInput('name', 'Enter your name', 'John Doe'),
+                                  textOutput('greeting')),
+                          tabPanel('Age',
+                                  sliderInput('age', 'Enter your age', 18, 100, 18),
+                                  textOutput('Age')),
+                        )
+                      )
+
+
+                      server &lt; function(input, output) {
+                        output$greeting &lt; renderText({
+                          paste('Hello', input$name)
+                        })
+                        
+                        output$Age &lt; renderText({
+                          paste('You are', input$age, 'years old')
+                        })
+                      }
+
+                      shinyApp(ui = ui, server = server)
+
+                </pre>
+              </div>
+              <div class="hidden">
+                <pre>
+                  
+                  ui &lt; fluidPage(
+                    titlePanel('Nav List'),
+                    navlistPanel(
+                      tabPanel('Name',
+                              textInput('name', 'Enter your name', 'John Doe'),
+                              textOutput('greeting')),
+                      tabPanel('Age',
+                              sliderInput('age', 'Enter your age', 18, 100, 18),
+                              textOutput('Age')),
+                    )
+                  )
+
+                  server &lt; function(input, output) {
+                    output$greeting &lt; renderText({
+                      paste('Hello', input$name)
+                    })
+                    
+                    output$Age &lt; renderText({
+                      paste('You are', input$age, 'years old')
+                    })
+                  }
+
+                  shinyApp(ui = ui, server = server)
+
+                </pre>
+              </div>
+              <div class="hidden">
+                <pre>
+                  library(shinydashboard)
+
+                  ui &lt; dashboardPage(
+                    dashboardHeader(title = 'Dashboard'),
+                    dashboardSidebar(
+                      sidebarMenu(
+                        menuItem('Name', tabName = 'name'),
+                        menuItem('Age', tabName = 'age')
+                      )
+                    ),
+                    dashboardBody(
+                      tabItems(
+                        tabItem(tabName = 'name',
+                                textInput('name', 'Enter your name', 'John Doe'),
+                                textOutput('greeting')),
+                        tabItem(tabName = 'age',
+                                sliderInput('age', 'Enter your age', 18, 100, 18),
+                                textOutput('Age'))
+                      )
+                    )
+                  )
+
+                  server &lt; function(input, output) {
+                    output$greeting &lt; renderText({
+                      paste('Hello', input$name)
+                    })
+                    
+                    output$Age &lt; renderText({
+                      paste('You are', input$age, 'years old')
+                    })
+                  }
+
+                  shinyApp(ui = ui, server = server)
+
+
+                </pre>
+              </div>
+          </div>
+      </div>
+      <h3>Pre-Built Layouts (Images)</h3>
+      <div class="toggle-section">
+        <button class = "active">Side-by-Side</button>
+        <button>Stacked</button>
+        <button>Stacked-Reversed</button>
+        <button>Tab-Based</button>
+        <button>Nav-List</button>
+        <button>Dashboard</button>
+        <div id="list-container">
+            <div>
+              <img src="ex1.png" alt="">
+            </div>
+            <div class = "hidden">
+              <img src="ex2.png" alt="">
+            </div>
+            <div class = "hidden">
+              <img src="ex3.png" alt="">
+            </div>
+            <div class = "hidden">
+              <img src="ex4.png" alt="">
+            </div>
+            <div class = "hidden">
+              <img src="ex5.png" alt="">
+            </div>
+            <div class = "hidden">
+              <img src="ex6.png" alt="">
+            </div>
+
+        </div>
+    </div>
+
+
+        <h3 id = "sub1_2">User Inputs</h3>
+
+        <p>The user interface (UI) is the visual part of a Shiny app that users interact with. It defines the layout and appearance of the app, including input controls like sliders, text boxes, and buttons, as well as output elements like plots, tables, and text. </p>
+
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Input Element</th>
+              <th>Description</th>
+              <th>Example Code</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>checkboxGroupInput</code></td>
+              <td>Generates a group of checkboxes that can be used to select multiple options.</td>
+              <td><code>checkboxGroupInput("id", "Label", choices = list("Option 1" = 1, "Option 2" = 2))</code></td>
+            </tr>
+            <tr>
+              <td><code>checkboxInput</code></td>
+              <td>Creates a single checkbox that can be toggled on or off.</td>
+              <td><code>checkboxInput("id", "Label", value = TRUE)</code></td>
+            </tr>
+            <tr>
+              <td><code>dateInput</code></td>
+              <td>Provides a calendar to assist users in entering dates.</td>
+              <td><code>dateInput("id", "Label", value = Sys.Date())</code></td>
+            </tr>
+            <tr>
+              <td><code>dateRangeInput</code></td>
+              <td>Allows users to select a range of dates using two date inputs.</td>
+              <td><code>dateRangeInput("id", "Label", start = Sys.Date() - 30, end = Sys.Date())</code></td>
+            </tr>
+            <tr>
+              <td><code>fileInput</code></td>
+              <td>Enables users to upload files from their local storage.</td>
+              <td><code>fileInput("id", "Label")</code></td>
+            </tr>
+            <tr>
+              <td><code>inputPanel</code></td>
+              <td>Groups multiple input elements in a panel.</td>
+              <td><code>inputPanel(numericInput("id1", "Numeric Input", 10), selectInput("id2", "Select Input", choices = c("Option 1", "Option 2")))</code></td>
+            </tr>
+            <tr>
+              <td><code>numericInput</code></td>
+              <td>Allows users to input numbers.</td>
+              <td><code>numericInput("id", "Label", value = 0)</code></td>
+            </tr>
+            <tr>
+              <td><code>passwordInput</code></td>
+              <td>Accepts a password, hiding the text entry.</td>
+              <td><code>passwordInput("id", "Label")</code></td>
+            </tr>
+            <tr>
+              <td><code>registerInputHandler</code></td>
+              <td>Registers a custom input handler for more complex input types.</td>
+              <td>Special use case, no simple example.</td>
+            </tr>
+            <tr>
+              <td><code>removeInputHandler</code></td>
+              <td>Removes a previously registered input handler.</td>
+              <td>Special use case, no simple example.</td>
+            </tr>
+            <tr>
+              <td><code>restoreInput</code></td>
+              <td>Restores input values from a previous session.</td>
+              <td>Special use case, no simple example.</td>
+            </tr>
+            <tr>
+              <td><code>selectInput</code></td>
+              <td>Creates a dropdown list from which users can select a single item.</td>
+              <td><code>selectInput("id", "Label", choices = c("Option 1", "Option 2"))</code></td>
+            </tr>
+            <tr>
+              <td><code>selectizeInput</code></td>
+              <td>Enhanced select input with support for searching, tagging, and more.</td>
+              <td><code>selectizeInput("id", "Label", choices = c("Option 1", "Option 2"), multiple = TRUE)</code></td>
+            </tr>
+            <tr>
+              <td><code>sliderInput</code></td>
+              <td>Generates a slider for inputting numeric values within a range.</td>
+              <td><code>sliderInput("id", "Label", min = 0, max = 100, value = 50)</code></td>
+            </tr>
+            <tr>
+              <td><code>snapshotPreprocessInput</code></td>
+              <td>Used for preprocessing input before taking a snapshot for reproducibility.</td>
+              <td>Advanced use case, no simple example.</td>
+            </tr>
+            <tr>
+              <td><code>textAreaInput</code></td>
+              <td>Provides a box for multi-line text input.</td>
+              <td><code>textAreaInput("id", "Label", value = "Enter text...")</code></td>
+            </tr>
+            <tr>
+              <td><code>textInput</code></td>
+              <td>Creates a single line text box for text input.</td>
+              <td><code>textInput("id", "Label", value = "Enter text")</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <h3 id="sub1_3">User Outputs</h3> 
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Output Element</th>
+              <th>Description</th>
+              <th>Example Code</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>dataTableOutput</code></td>
+              <td>Renders a reactive data table that can dynamically update based on input changes.</td>
+              <td><code>dataTableOutput("tableId")</code></td>
+            </tr>
+            <tr>
+              <td><code>getCurrentOutputInfo</code></td>
+              <td>Retrieves information about the current reactive output being processed.</td>
+              <td>Used internally, not typically needed in user code.</td>
+            </tr>
+            <tr>
+              <td><code>htmlOutput</code></td>
+              <td>Renders reactive HTML content generated by server logic.</td>
+              <td><code>htmlOutput("htmlId")</code></td>
+            </tr>
+            <tr>
+              <td><code>imageOutput</code></td>
+              <td>Displays a reactive image that can change in response to inputs.</td>
+              <td><code>imageOutput("imageId")</code></td>
+            </tr>
+            <tr>
+              <td><code>outputOptions</code></td>
+              <td>Configures options for individual reactive outputs, like debounce and throttle settings.</td>
+              <td><code>outputOptions(output, "outputId", suspendWhenHidden = FALSE)</code></td>
+            </tr>
+            <tr>
+              <td><code>plotOutput</code></td>
+              <td>Displays reactive plots which update based on input changes.</td>
+              <td><code>plotOutput("plotId")</code></td>
+            </tr>
+            <tr>
+              <td><code>snapshotPreprocessOutput</code></td>
+              <td>Used for preprocessing output before taking a snapshot for reproducibility.</td>
+              <td>Advanced use case, no simple example.</td>
+            </tr>
+            <tr>
+              <td><code>tableOutput</code></td>
+              <td>Renders a reactive table that updates based on data changes.</td>
+              <td><code>tableOutput("tableId")</code></td>
+            </tr>
+            <tr>
+              <td><code>textOutput</code></td>
+              <td>Displays reactive text content generated by server logic.</td>
+              <td><code>textOutput("textId")</code></td>
+            </tr>
+            <tr>
+              <td><code>uiOutput</code></td>
+              <td>Renders a UI element dynamically on the server side.</td>
+              <td><code>uiOutput("uiId")</code></td>
+            </tr>
+            <tr>
+              <td><code>verbatimTextOutput</code></td>
+              <td>Displays reactive text content exactly as generated, preserving whitespace and special characters.</td>
+              <td><code>verbatimTextOutput("verbatimId")</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 id="sub1_5">Reactivity</h3>
+
+        <table border="1" cellpadding="10" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Function</th>
+              <th>Description</th>
+              <th>Example Code</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>reactive()</code></td>
+              <td>Creates a reactive expression that updates when its reactive dependencies change.</td>
+              <td><pre><code>
+        reactiveText &lt; reactive({
+          paste("You entered:", input$text)
+        })
+        output$text &lt; renderText({
+          reactiveText()
+        })
+              </code></pre></td>
+            </tr>
+            <tr>
+              <td><code>observe()</code></td>
+              <td>Creates an observer that runs whenever its reactive dependencies change, without returning a value.</td>
+              <td><pre><code>
+        observe({
+          print(input$text)
+        })
+              </code></pre></td>
+            </tr>
+            <tr>
+              <td><code>observeEvent()</code></td>
+              <td>Creates an observer that triggers only when a specific event occurs, e.g., a button press.</td>
+              <td><pre><code>
+        observeEvent(input$btn, {
+          print("Button clicked")
+        })
+              </code></pre></td>
+            </tr>
+            <tr>
+              <td><code>reactiveValues()</code></td>
+              <td>Creates a list of reactive values that can store multiple reactive states.</td>
+              <td><pre><code>
+        rv &lt; reactiveValues(count = 0, msg = "Hello")
+        observeEvent(input$btn, {
+          rv$count &lt; rv$count + 1
+          rv$msg &lt; paste("You clicked", rv$count, "times")
+        })
+        output$text &lt; renderText({
+          rv$msg
+        })
+              </code></pre></td>
+            </tr>
+            <tr>
+              <td><code>reactiveVal()</code></td>
+              <td>A simpler version of <code>reactiveValues()</code> for handling a single reactive value.</td>
+              <td><pre><code>
+        count &lt; reactiveVal(0)
+        observeEvent(input$btn, {
+          count(count() + 1)
+        })
+        output$text &lt; renderText({
+          paste("Count is", count())
+        })
+              </code></pre></td>
+            </tr>
+            <tr>
+              <td><code>eventReactive()</code></td>
+              <td>Creates a reactive expression that updates only when a specific event occurs.</td>
+              <td><pre><code>
+        result &lt; eventReactive(input$btn, {
+          paste("You clicked the button", input$btn, "times")
+        })
+        output$text &lt; renderText({
+          result()
+        })
+              </code></pre></td>
+            </tr>
+            <tr>
+              <td><code>isolate()</code></td>
+              <td>Accesses a reactive value without triggering reactivity.</td>
+              <td><pre><code>
+        output$text &lt; renderText({
+          isolate({
+            paste("You entered:", input$text)
+          })
+        })
+              </code></pre></td>
+            </tr>
+            <tr>
+              <td><code>invalidateLater()</code></td>
+              <td>Sets up a reactive expression to re-evaluate after a specific time interval.</td>
+              <td><pre><code>
+        output$currentTime &lt; renderText({
+          invalidateLater(1000)  # Re-evaluates every second
+          paste("Time:", Sys.time())
+        })
+              </code></pre></td>
+            </tr>
+            <tr>
+              <td><code>req()</code></td>
+              <td>Ensures that a reactive expression only proceeds if a required condition is met.</td>
+              <td><pre><code>
+        output$text &lt; renderText({
+          req(input$text != "")
+          paste("You entered:", input$text)
+        })
+              </code></pre></td>
+            </tr>
+            <tr>
+              <td><code>freezeReactiveValue()</code></td>
+              <td>Prevents reactivity from being triggered for a specific input or value.</td>
+              <td><pre><code>
+        freezeReactiveValue(input, "textInput")
+              </code></pre></td>
+            </tr>
+            <tr>
+              <td><code>bindCache()</code></td>
+              <td>Caches the result of a reactive expression to avoid unnecessary re-computation.</td>
+              <td><pre><code>
+        output$plot &lt; renderPlot({
+          bindCache({
+            plot(cars)
+          }, input$dataset)
+        })
+              </code></pre></td>
+            </tr>
+            <tr>
+              <td><code>debounce()</code></td>
+              <td>Delays a reactive expression’s update until the input stops changing for a certain period.</td>
+              <td><pre><code>
+        debouncedText &lt; debounce(reactive(input$text), 500)
+        output$text &lt; renderText({
+          paste("You entered:", debouncedText())
+        })
+              </code></pre></td>
+            </tr>
+            <tr>
+              <td><code>throttle()</code></td>
+              <td>Throttles a reactive expression, causing it to update at a fixed interval.</td>
+              <td><pre><code>
+        throttledText &lt; throttle(reactive(input$text), 1000)
+        output$text &lt; renderText({
+          paste("You typed:", throttledText())
+        })
+              </code></pre></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 id="sub1_6">User Feedback</h3>
+
+        <table border="1" cellpadding="10" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Function</th>
+              <th>Description</th>
+              <th>Example Code</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>validate()</code></td>
+              <td>
+                Displays a custom validation message to users if a condition is not met. Stops the execution of the current reactive context.
+              </td>
+              <td>
+                <pre><code>
+        validate(need(input$age > 18, "You must be over 18 years old"))
+                </code></pre>
+              </td>
+            </tr>
+            <tr>
+              <td><code>need()</code></td>
+              <td>
+                A helper function used with <code>validate()</code> to check if a condition is true. If false, it shows the provided error message.
+              </td>
+              <td>
+                <pre><code>
+        validate(need(input$age, "Age is required"))
+                </code></pre>
+              </td>
+            </tr>
+            <tr>
+              <td><code>req()</code></td>
+              <td>
+                Ensures that an input or condition is available before proceeding. It pauses reactivity until the required input is provided.
+              </td>
+              <td>
+                <pre><code>
+        req(input$name)
+                </code></pre>
+              </td>
+            </tr>
+            <tr>
+              <td><code>tryCatch()</code></td>
+              <td>
+                Provides error handling by executing code within the try block and catching any errors that occur, allowing you to show error messages.
+              </td>
+              <td>
+                <pre><code>
+        output$result <- renderText({
+          tryCatch({
+            if (input$number < 0) stop("Number must be positive")
+            paste("The number is", input$number)
+          }, error = function(e) {
+            paste("Error:", e$message)
+          })
+        })
+                </code></pre>
+              </td>
+            </tr>
+            <tr>
+              <td><code>withProgress()</code></td>
+              <td>
+                Displays a progress bar to indicate the ongoing progress of a long-running operation.
+              </td>
+              <td>
+                <pre><code>
+        withProgress(message = "Calculating...", value = 0, {
+          for (i in 1:10) {
+            incProgress(1/10)
+            Sys.sleep(0.1)
+          }
+        })
+                </code></pre>
+              </td>
+            </tr>
+            <tr>
+              <td><code>progressBar()</code></td>
+              <td>
+                A custom progress bar function, often from external packages like <code>shinyWidgets</code>, to give users feedback on app loading or processing.
+              </td>
+              <td>
+                <pre><code>
+        progressBar(id = "pb", value = 50, total = 100)
+                </code></pre>
+              </td>
+            </tr>
+            <tr>
+              <td><code>isolate()</code></td>
+              <td>
+                Prevents a reactive expression from being invalidated by inputs, making the expression non-reactive until explicitly triggered.
+              </td>
+              <td>
+                <pre><code>
+        output$result <- renderText({
+          isolate({
+            paste("You entered:", input$name)
+          })
+        })
+                </code></pre>
+              </td>
+            </tr>
+            <tr>
+              <td><code>showNotification()</code></td>
+              <td>
+                Displays a temporary notification message to provide feedback to users. Can be used to show success, warning, or error messages.
+              </td>
+              <td>
+                <pre><code>
+        showNotification("Data saved successfully!", type = "message")
+                </code></pre>
+              </td>
+            </tr>
+            <tr>
+              <td><code>removeNotification()</code></td>
+              <td>
+                Removes an active notification that was previously shown with <code>showNotification()</code>.
+              </td>
+              <td>
+                <pre><code>
+        id <- showNotification("Processing...", duration = NULL)
+        removeNotification(id)
+                </code></pre>
+              </td>
+            </tr>
+            <tr>
+              <td><code>shiny::onStop()</code></td>
+              <td>
+                Specifies code to run when the session is about to end, such as cleanup tasks or saving user input.
+              </td>
+              <td>
+                <pre><code>
+        session$onStop(function() {
+          saveData(input$dataset)
+        })
+                </code></pre>
+              </td>
+            </tr>
+            <tr>
+              <td><code>validateCssUnit()</code></td>
+              <td>
+                Validates a CSS unit (e.g., "10px", "20%") for proper formatting before using it in UI elements.
+              </td>
+              <td>
+                <pre><code>
+        validateCssUnit("50px")  # Valid
+        validateCssUnit("abc")   # Error
+                </code></pre>
+              </td>
+            </tr>
+            <tr>
+              <td><code>observe()</code></td>
+              <td>
+                Watches for changes in reactive inputs but does not return a value. Useful for triggering side effects like logging or UI updates.
+              </td>
+              <td>
+                <pre><code>
+        observe({
+          if (input$submit) {
+            cat("Submit button clicked")
+          }
+        })
+                </code></pre>
+              </td>
+            </tr>
+            <tr>
+              <td><code>observeEvent()</code></td>
+              <td>
+                Similar to <code>observe()</code> but triggered by a specific event, such as a button click or change in a reactive input.
+              </td>
+              <td>
+                <pre><code>
+        observeEvent(input$submit, {
+          cat("Submit clicked. Name:", input$name)
+        })
+                </code></pre>
+              </td>
+            </tr>
+            <tr>
+              <td><code>freezeReactiveValue()</code></td>
+              <td>
+                Temporarily prevents an input from triggering reactive changes, often used when updating multiple inputs simultaneously.
+              </td>
+              <td>
+                <pre><code>
+        freezeReactiveValue(input, "id")
+                </code></pre>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+        
+
+
+
+    
+</body>
+</html>
