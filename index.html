@@ -230,7 +230,7 @@
                   # Side by Side
                   library(shiny)
 
-                  ui &lt; fluidPage(
+                  ui &lt;- fluidPage(
                     titlePanel("Reactive Text"),
                     # Add CSS
                     tags$style(HTML("
@@ -254,8 +254,8 @@
                     )
                   )
 
-                  server &lt; function(input, output) {
-                    output$greeting &lt; renderText({
+                  server &lt;- function(input, output) {
+                    output$greeting &lt;- renderText({
                       paste("Hello", input$name, "you are", input$age, "years old.")
                     })
 
@@ -266,7 +266,7 @@
               </div>
               <div class = "hidden">
                 <pre>
-                ui &lt; fluidPage(
+                ui &lt;- fluidPage(
                   titlePanel("Reactive Text"),
                   # Add CSS
                   tags$style(HTML("
@@ -290,8 +290,8 @@
                   )
                 )
 
-                server &lt; function(input, output) {
-                  output$greeting &lt; renderText({
+                server &lt;- function(input, output) {
+                  output$greeting &lt;- renderText({
                     paste("Hello", input$name, "you are", input$age, "years old.")
                   })
 
@@ -303,7 +303,7 @@
               </div>
               <div class = "hidden">
                 <pre>
-                  ui &lt; fluidPage(
+                  ui &lt;- fluidPage(
                   titlePanel("Reactive Text"),
                   # Add CSS
                   tags$style(HTML("
@@ -327,8 +327,8 @@
                   )
                 )
 
-                server &lt; function(input, output) {
-                  output$greeting &lt; renderText({
+                server &lt;- function(input, output) {
+                  output$greeting &lt;- renderText({
                     paste("Hello", input$name, "you are", input$age, "years old.")
                   })
 
@@ -340,7 +340,7 @@
               </div>
               <div class = "hidden">
                 <pre>
-                  ui &lt; fluidPage(
+                  ui &lt;- fluidPage(
                         titlePanel('Tab Items'),
                         tabsetPanel(
                           tabPanel('Name',
@@ -353,12 +353,12 @@
                       )
 
 
-                      server &lt; function(input, output) {
-                        output$greeting &lt; renderText({
+                      server &lt;- function(input, output) {
+                        output$greeting &lt;- renderText({
                           paste('Hello', input$name)
                         })
                         
-                        output$Age &lt; renderText({
+                        output$Age &lt;- renderText({
                           paste('You are', input$age, 'years old')
                         })
                       }
@@ -370,7 +370,7 @@
               <div class="hidden">
                 <pre>
                   
-                  ui &lt; fluidPage(
+                  ui &lt;- fluidPage(
                     titlePanel('Nav List'),
                     navlistPanel(
                       tabPanel('Name',
@@ -382,12 +382,12 @@
                     )
                   )
 
-                  server &lt; function(input, output) {
-                    output$greeting &lt; renderText({
+                  server &lt;- function(input, output) {
+                    output$greeting &lt;- renderText({
                       paste('Hello', input$name)
                     })
                     
-                    output$Age &lt; renderText({
+                    output$Age &lt;- renderText({
                       paste('You are', input$age, 'years old')
                     })
                   }
@@ -400,7 +400,7 @@
                 <pre>
                   library(shinydashboard)
 
-                  ui &lt; dashboardPage(
+                  ui &lt;- dashboardPage(
                     dashboardHeader(title = 'Dashboard'),
                     dashboardSidebar(
                       sidebarMenu(
@@ -420,12 +420,12 @@
                     )
                   )
 
-                  server &lt; function(input, output) {
-                    output$greeting &lt; renderText({
+                  server &lt;- function(input, output) {
+                    output$greeting &lt;- renderText({
                       paste('Hello', input$name)
                     })
                     
-                    output$Age &lt; renderText({
+                    output$Age &lt;- renderText({
                       paste('You are', input$age, 'years old')
                     })
                   }
@@ -652,10 +652,10 @@
               <td><code>reactive()</code></td>
               <td>Creates a reactive expression that updates when its reactive dependencies change.</td>
               <td><pre><code>
-        reactiveText &lt; reactive({
+        reactiveText &lt;- reactive({
           paste("You entered:", input$text)
         })
-        output$text &lt; renderText({
+        output$text &lt;- renderText({
           reactiveText()
         })
               </code></pre></td>
@@ -682,12 +682,12 @@
               <td><code>reactiveValues()</code></td>
               <td>Creates a list of reactive values that can store multiple reactive states.</td>
               <td><pre><code>
-        rv &lt; reactiveValues(count = 0, msg = "Hello")
+        rv &lt;- reactiveValues(count = 0, msg = "Hello")
         observeEvent(input$btn, {
-          rv$count &lt; rv$count + 1
-          rv$msg &lt; paste("You clicked", rv$count, "times")
+          rv$count &lt;- rv$count + 1
+          rv$msg &lt;- paste("You clicked", rv$count, "times")
         })
-        output$text &lt; renderText({
+        output$text &lt;- renderText({
           rv$msg
         })
               </code></pre></td>
@@ -696,11 +696,11 @@
               <td><code>reactiveVal()</code></td>
               <td>A simpler version of <code>reactiveValues()</code> for handling a single reactive value.</td>
               <td><pre><code>
-        count &lt; reactiveVal(0)
+        count &lt;- reactiveVal(0)
         observeEvent(input$btn, {
           count(count() + 1)
         })
-        output$text &lt; renderText({
+        output$text &lt;- renderText({
           paste("Count is", count())
         })
               </code></pre></td>
@@ -709,10 +709,10 @@
               <td><code>eventReactive()</code></td>
               <td>Creates a reactive expression that updates only when a specific event occurs.</td>
               <td><pre><code>
-        result &lt; eventReactive(input$btn, {
+        result &lt;- eventReactive(input$btn, {
           paste("You clicked the button", input$btn, "times")
         })
-        output$text &lt; renderText({
+        output$text &lt;- renderText({
           result()
         })
               </code></pre></td>
@@ -721,7 +721,7 @@
               <td><code>isolate()</code></td>
               <td>Accesses a reactive value without triggering reactivity.</td>
               <td><pre><code>
-        output$text &lt; renderText({
+        output$text &lt;- renderText({
           isolate({
             paste("You entered:", input$text)
           })
@@ -732,7 +732,7 @@
               <td><code>invalidateLater()</code></td>
               <td>Sets up a reactive expression to re-evaluate after a specific time interval.</td>
               <td><pre><code>
-        output$currentTime &lt; renderText({
+        output$currentTime &lt;- renderText({
           invalidateLater(1000)  # Re-evaluates every second
           paste("Time:", Sys.time())
         })
@@ -742,7 +742,7 @@
               <td><code>req()</code></td>
               <td>Ensures that a reactive expression only proceeds if a required condition is met.</td>
               <td><pre><code>
-        output$text &lt; renderText({
+        output$text &lt;- renderText({
           req(input$text != "")
           paste("You entered:", input$text)
         })
@@ -759,7 +759,7 @@
               <td><code>bindCache()</code></td>
               <td>Caches the result of a reactive expression to avoid unnecessary re-computation.</td>
               <td><pre><code>
-        output$plot &lt; renderPlot({
+        output$plot &lt;- renderPlot({
           bindCache({
             plot(cars)
           }, input$dataset)
@@ -770,8 +770,8 @@
               <td><code>debounce()</code></td>
               <td>Delays a reactive expression’s update until the input stops changing for a certain period.</td>
               <td><pre><code>
-        debouncedText &lt; debounce(reactive(input$text), 500)
-        output$text &lt; renderText({
+        debouncedText &lt;- debounce(reactive(input$text), 500)
+        output$text &lt;- renderText({
           paste("You entered:", debouncedText())
         })
               </code></pre></td>
@@ -780,8 +780,8 @@
               <td><code>throttle()</code></td>
               <td>Throttles a reactive expression, causing it to update at a fixed interval.</td>
               <td><pre><code>
-        throttledText &lt; throttle(reactive(input$text), 1000)
-        output$text &lt; renderText({
+        throttledText &lt;- throttle(reactive(input$text), 1000)
+        output$text &lt;- renderText({
           paste("You typed:", throttledText())
         })
               </code></pre></td>
