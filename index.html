@@ -40,7 +40,7 @@
                     <a href="#sub1_5">Reactivity</a>
                     <a href="#sub1_6">User Feedback</a>
                     <a href="#sub1_7">Create our first App</a>
-                    <a href="#sub1_8">GGPlotly</a>
+                    <a href="#sub1_8">Implementing Feedback</a>
                 </div>
             </div>
             <div class="sections-sub">
@@ -840,7 +840,7 @@
               </td>
               <td>
                 <pre><code>
-        output$result <- renderText({
+        output$result &lt;- renderText({
           tryCatch({
             if (input$number < 0) stop("Number must be positive")
             paste("The number is", input$number)
@@ -885,7 +885,7 @@
               </td>
               <td>
                 <pre><code>
-        output$result <- renderText({
+        output$result &lt;- renderText({
           isolate({
             paste("You entered:", input$name)
           })
@@ -911,7 +911,7 @@
               </td>
               <td>
                 <pre><code>
-        id <- showNotification("Processing...", duration = NULL)
+        id &lt;- showNotification("Processing...", duration = NULL)
         removeNotification(id)
                 </code></pre>
               </td>
@@ -983,6 +983,190 @@
           </tbody>
         </table>
         
+        <h3 id="sub1_7">First App</h3>
+
+        <p>Here is a simple example of a Shiny app that takes several user inputs and outputs descriptives and a graph:</p>
+
+        <pre>
+          ui &lt;- fluidPage(
+                titlePanel('Normal Distribution'),
+                sidebarLayout(
+                  sidebarPanel(tabsetPanel(
+                    tabPanel('Distribution',
+                            sliderInput('n','Sample Size',value = 100,min = 10,max = 1000,step = 10),
+                            sliderInput('mean','Mean',value = 0,min = -10,max = 10,step = 0.1),
+                            sliderInput('sd','Standard Deviation',value = 1,min = 0.1,max = 10,step = 0.1)
+                            ),
+                    tabPanel('Graph Settings',
+                            selectInput('color','Pick a Color',choices = colours()),
+                            selectInput('fill','Fill Color',choices = colours()),
+                            sliderInput('alpha', 'Transparency',value = 0.5,min = 0,max = 1,step = 0.1)
+                            )
+                            ),
+                    actionButton('gen', 'Generate'),width = 12),
+                  mainPanel(
+                    tabsetPanel(
+                      tabPanel('Graph',plotOutput('a')),
+                      tabPanel('Descriptives',verbatimTextOutput('b'))
+                    ),width = 12)
+                )
+              )
+
+              server &lt;- function(input,output,session){
+                observeEvent(
+                  input$gen,{
+                    data &lt;- rnorm(input$n,input$mean,input$sd)
+                    color = input$color
+                    output$a &lt;- renderPlot({
+                      hist(data,col = color,breaks = 30,main = 'Normal Distribution')
+                    })
+                    output$b &lt;- renderText({
+                      data &lt;- rnorm(input$n,input$mean,input$sd)
+                      paste('Mean:',mean(data),'\n',
+                            'Standard Deviation:',sd(data),'\n')
+                    })
+                  }
+                )
+              }
+
+              shinyApp(ui = ui, server = server)
+        </pre>
+
+        <p>This app allows users to specify the sample size, mean, and standard deviation of a normal distribution, and customize the appearance of the histogram. When the "Generate" button is clicked, the app generates a random sample, displays the histogram, and outputs the mean and standard deviation of the sample.</p>
+
+        <ol>
+          <li>Sample Size: The number of data points in the sample.</li>
+          <li>Mean: The average value of the normal distribution.</li>
+          <li>Standard Deviation: The spread or variability of the data.</li>
+          <li>Color: The color of the histogram bars.</li>
+          <li>Fill Color: The color to fill the histogram bars.</li>
+          <li>Transparency: The transparency level of the histogram bars.</li>
+        </ol>
+
+        <p>When the "Generate" button is clicked, the app generates a random sample of the specified size and parameters, creates a histogram with the selected colors and transparency, and displays the mean and standard deviation of the sample.</p>
+
+        <p>This example demonstrates how to create a simple Shiny app with user inputs, reactive outputs, and interactivity using the <code>shiny</code> package in R.</p>
+
+        <h3 id="sub1_8">Adding Validity Checks</h3>
+
+        <p>It is important to add validity checks to ensure that the user inputs are within acceptable ranges or meet specific criteria. This helps prevent errors and ensures that the app functions correctly.</p>
+
+        <pre>
+          ui &lt;- fluidPage(
+                  titlePanel('Normal Distribution'),
+                  sidebarLayout(
+                    sidebarPanel(
+                      tabsetPanel(
+                        tabPanel('Distribution',
+                                sliderInput('n', 'Sample Size', value = 100, min = 10, max = 1000, step = 10),
+                                sliderInput('mean', 'Mean', value = 0, min = -10, max = 10, step = 0.1),
+                                sliderInput('sd', 'Standard Deviation', value = 1, min = 0.1, max = 10, step = 0.1)
+                        ),
+                        tabPanel('Graph Settings',
+                                selectInput('color', 'Pick a Color', choices = colours()),
+                                selectInput('fill', 'Fill Color', choices = colours()),
+                                sliderInput('alpha', 'Transparency', value = 0.5, min = 0, max = 1, step = 0.1)
+                        )
+                      ),
+                      actionButton('gen', 'Generate'), width = 12
+                    ),
+                    mainPanel(
+                      tabsetPanel(
+                        tabPanel('Graph', plotOutput('a')),
+                        tabPanel('Descriptives', verbatimTextOutput('b'))
+                      ), width = 12
+                    )
+                  )
+                )
+
+                server &lt;- function(input, output, session) {
+                  observeEvent(input$gen, {
+                    # Validity checks
+                    validate(
+                      need(input$n > 0, "Sample size must be greater than 0."),
+                      need(input$sd > 0, "Standard deviation must be greater than 0.")
+                    )
+                    
+                    data &lt;- rnorm(input$n, input$mean, input$sd)
+                    color &lt;- input$color
+                    
+                    output$a &lt;- renderPlot({
+                      hist(data, col = color, breaks = 30, main = 'Normal Distribution')
+                    })
+                    
+                    output$b &lt;- renderText({
+                      validate(
+                        need(input$n > 0, "Sample size must be greater than 0."),
+                        need(input$sd > 0, "Standard deviation must be greater than 0.")
+                      )
+                      
+                      # Generate new data for descriptive statistics
+                      data &lt;- rnorm(input$n, input$mean, input$sd)
+                      paste('\n','Mean:', round(mean(data), 2), '\n',
+                            'Standard Deviation:', round(sd(data), 2), '\n')
+                    })
+                  })
+                }
+
+                shinyApp(ui = ui, server = server)
+
+        </pre>
+
+        <p>In this updated version of the app, we have added validity checks to ensure that the sample size and standard deviation are greater than zero. If these conditions are not met, the app will display an error message and prevent the generation of the histogram and descriptive statistics.</p>
+
+        <h3>Using Modals</h3>
+
+        <pre>
+          server &lt;- function(input, output, session) {
+            observeEvent(input$gen, {
+              
+              # Validity checks with pop-up alerts
+              if (input$n &lt;= 0) {
+                showModal(modalDialog(
+                  title = "Input Error",
+                  "Sample size must be greater than 0.",
+                  easyClose = TRUE,
+                  footer = NULL
+                ))
+                return(NULL)
+              }
+              
+              if (input$sd &lt;= 0) {
+                showModal(modalDialog(
+                  title = "Input Error",
+                  "Standard deviation must be greater than 0.",
+                  easyClose = TRUE,
+                  footer = NULL
+                ))
+                return(NULL)
+              }
+              
+              data &lt;- rnorm(input$n, input$mean, input$sd)
+              color &lt;- input$color
+              
+              output$a &lt;- renderPlot({
+                hist(data, col = color, breaks = 30, main = 'Normal Distribution')
+              })
+              
+              output$b &lt;- renderText({
+                # Generate new data for descriptive statistics
+                data &lt;- rnorm(input$n, input$mean, input$sd)
+                paste('Mean:', round(mean(data), 2), '\n',
+                      'Standard Deviation:', round(sd(data), 2), '\n',
+                      'Skewness:', round(skewness(data), 2), '\n',
+                      'Kurtosis:', round(kurtosis(data), 2))
+              })
+            })
+          }
+          shinyApp(ui = ui, server = server)
+          
+        </pre>
+
+        <p>In this version of the app, we have replaced the <code>validate()</code> function with modal dialogs that display pop-up alerts when the sample size or standard deviation is less than or equal to zero. This provides a more user-friendly way to communicate errors and prevent the app from proceeding with invalid inputs.</p>
+
+        <div class="image">
+          <img src="ex7.png" alt="Modal Dialog">
+        </div>
         
 
 
